@@ -35,14 +35,18 @@ public class Parser
     public void advance()
     {
         this.current_command= this.dataReader.nextLine();
-        this.current_command = this.current_command.replaceAll("\\s+","");
-        if(this.current_command.startsWith("//"))
+        this.current_command = this.current_command.replaceAll("\\s+","");  //Takes care of all whitespaces
+        if(this.current_command.startsWith("//"))       //Comment Lines
         {
             this.advance();
         }
-        else if(this.current_command.equals(""))
+        else if(this.current_command.equals(""))        //Empty Lines
         {
             this.advance();
+        }
+        else if(this.current_command.contains("//"))    //Removes inline comments
+        {
+            this.current_command = this.current_command.substring(0, this.current_command.indexOf("/"));
         }
         else return;
     }
